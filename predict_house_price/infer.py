@@ -52,11 +52,15 @@ with fluid.scope_guard(inference_scope):  # 修改全局/默认作用域（scope
 
     print("infer results: (House Price)")
     for idx, val in enumerate(results[0]):
-        print("%d: %.2f" % (idx, val))
+        # print("%d: %.2f" % (idx, val))
         infer_results.append(val)
 
     print("ground truth:")
     for idx, val in enumerate(test_y):
-        print("%d: %.2f" % (idx, val))
+        # print("%d: %.2f" % (idx, val))
         groud_truths.append(val)
+
+    for truth_predict in zip(groud_truths, infer_results):
+        print(truth_predict[0][0], truth_predict[1][0])
+
     # draw_infer_result(groud_truths, infer_results)

@@ -15,6 +15,7 @@ BATCH_SIZE = 20
 train_reader = paddle.batch(
     paddle.reader.shuffle(paddle.dataset.uci_housing.train(), buf_size=BUF_SIZE),
     batch_size=BATCH_SIZE)
+
 # 用于测试的数据提供器，每次从缓存中随机读取批次大小的数据
 test_reader = paddle.batch(
     paddle.reader.shuffle(paddle.dataset.uci_housing.test(), buf_size=BUF_SIZE),
@@ -80,7 +81,8 @@ for pass_id in range(EPOCH_NUM):  # 训练EPOCH_NUM轮
                              fetch_list=[avg_cost])
         if batch_id % 40 == 0:
             print("Pass:%d, Cost:%0.5f" % (pass_id, train_cost[0][0]))  # 打印最后一个batch的损失值
-        iter = iter+BATCH_SIZE
+
+        iter = iter + BATCH_SIZE
         iters.append(iter)
         train_costs.append(train_cost[0][0])
 
@@ -96,6 +98,7 @@ for pass_id in range(EPOCH_NUM):  # 训练EPOCH_NUM轮
 # 如果保存路径不存在就创建
 if not os.path.exists(model_save_dir):
     os.makedirs(model_save_dir)
+
 print('save models to %s' % (model_save_dir))
 # 保存训练参数到指定路径中，构建一个专门用预测的program
 fluid.io.save_inference_model(model_save_dir,  # 保存推理model的路径
